@@ -1,7 +1,21 @@
-import http from 'node:http';
+import {createServer, IncomingMessage, ServerResponse} from 'node:http';
+import { getRequest } from './get';
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200)
+const PORT = process.env.PORT || 3000
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+  switch (req.method) {
+    case 'GET':
+      getRequest(req, res);
+      break;
+    case 'POST':
+      break;
+    case 'PUT':
+      break;
+    case 'DELETE':
+      break;
+  }
 });
 
-server.listen(3000)
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
