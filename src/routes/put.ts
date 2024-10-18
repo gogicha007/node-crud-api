@@ -1,15 +1,13 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
 import { updateUser } from '../utils/updateUser';
-import { getAll, getById } from '../utils/getUsers';
-import { isValidId } from '../utils/utils';
 
 
 export const putRequest = async (req: IncomingMessage, res: ServerResponse) => {
   switch (req.url) {
     case (req.url as string).match(/\/api\/users\/\w+/)?.input:
-      const putUser = await updateUser(req, res)
-      res.writeHead(putUser.status, { 'Content-Type': 'text/plain' });
-      res.end(putUser.data);
+      const putResult = await updateUser(req, res)
+      res.writeHead(putResult.status, { 'Content-Type': 'text/plain' });
+      res.end(putResult.data);
       break;
     default:
       res.statusCode = 404;

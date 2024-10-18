@@ -1,31 +1,40 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { isValidId, getReqBody } from './utils';
-import { findUser } from './findUser';
+import path from 'node:path';
+import { isValidId, getReqBody, getJSONData, writeDataToFile } from './utils';
 import { IFUser } from '../interfaces';
 
+const usersFilePath = path.resolve(__dirname, '../data/users.json');
 
 export const updateUser = async (req: IncomingMessage, res: ServerResponse) => {
   const id = req.url?.split('/')[3] as string;
-  let result = { status: 200, data: '' };
+  let result = { status: 400, data: 'Something went wrong' };
   if (isValidId(id)) {
-    const userData = await findUser(id);
+    const usersArray = await getJSONData(usersFilePath);
+    const userData = usersArray.find((el) => el.id === id);
     if (!userData) {
       result.status = 404;
       result.data = 'User not found...';
     } else {
-        const body = await getReqBody(req)
-
-        const {username, age, hobbies } = JSON.parse(body as string)
-        const user = {
-            username: username || userData.username,
-            age: age || userData.age,
-            hobbies: hobbies || userData.hobbies
-        }
-        let data = '';
-        req.on('data', (chunk) => {
-          data += chunk;
-        });
-        result.data = JSON.stringify(userData);
+      let username, age, hobbies;
+      const body = await getReqBody(req);
+      if (body) {
+        const bodyObj = JSON.parse(body as string);
+        username = bodyObj.username;
+        age = bodyObj.age;
+        hobbies = bodyObj.hobbies;
+      }
+      const user = {
+        username: username || userData.username,
+        age: age || userData.age,
+        hobbies: hobbies || userData.hobbies,
+      };
+      const userIndex = usersArray.findIndex((el) => el.id === id);
+      usersArray[userIndex] = { id, ...user };
+      const updateDone = await writeDataToFile(usersFilePath, usersArray);
+      if (updateDone) {
+        result.status = 200;
+        result.data = JSON.stringify(user);
+      }
     }
   } else {
     result.status = 400;

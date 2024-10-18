@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IFUser } from '../interfaces';
-import { writeDataToFile } from './utils';
+import { writeDataToFile, getJSONData } from './utils';
 import path from 'node:path'
+
+const usersFilePath = path.resolve(__dirname, '../data/users.json');
 
 export const createUser = async (data: string) => {
   try {
@@ -10,8 +12,9 @@ export const createUser = async (data: string) => {
     if (isValid) {
       userData.id = uuidv4();
       userData.username = userData.username.split(' ')[0]
-      const usersJSON = path.resolve(__dirname,'../data/users.json')
-      const isDataWrote = await writeDataToFile(usersJSON, userData)
+      const usersArray = await getJSONData(usersFilePath)
+      usersArray.push(userData)
+      const isDataWrote = await writeDataToFile(usersFilePath, usersArray)
       return isDataWrote;
     }
     return false;
