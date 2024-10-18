@@ -6,11 +6,11 @@ export const getRequest = (req: IncomingMessage, res: ServerResponse) => {
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end(`home method ${req.url}`);
       break;
-    case '/users':
+    case 'api/users':
         res.writeHead(200)
         res.end('get users')
         break
-    case (req.url as string).match(/\/users\/\w+/)?.input: 
+    case (req.url as string).match(/\/api\/users\/\w+/)?.input: 
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end('get user by id');
       break;
