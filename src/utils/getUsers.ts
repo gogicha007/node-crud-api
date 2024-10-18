@@ -7,7 +7,6 @@ import { IFUser } from '../interfaces';
 const usersFilePath = path.resolve(__dirname, '../data/users.json');
 
 export const getAll = async (req: IncomingMessage, res: ServerResponse) => {
-  console.log('get all');
   try {
     const rsData = await readFile(usersFilePath, {
       encoding: 'utf-8',

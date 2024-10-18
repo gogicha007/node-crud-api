@@ -12,8 +12,8 @@ export const postRequest = (req: IncomingMessage, res: ServerResponse) => {
       req.on('end', async () => {
         const result = await createUser(data)
         if(result){
-          res.statusCode = 200;
-          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.statusCode = 201;
+          res.writeHead(201, { 'Content-Type': 'text/plain' });
           res.end('postRequests - user created');
         } else {
           res.statusCode = 400;
