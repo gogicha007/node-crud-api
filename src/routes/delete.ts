@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
+import { deleteUser } from '../utils/deleteUser';
 
 export const deleteRequest = async (
   req: IncomingMessage,
@@ -6,9 +7,10 @@ export const deleteRequest = async (
 ) => {
   switch (req.url) {
     case (req.url as string).match(/\/api\/users\/\w+/)?.input:
-      const getUser = await getById(req, res);
-      res.writeHead(getUser.status, { 'Content-Type': 'text/plain' });
-      res.end(getUser.data);
+      const removedUser = await deleteUser(req, res);
+      console.log(removedUser)
+      res.writeHead(removedUser.status, { 'Content-Type': 'text/plain' });
+      res.end(removedUser.data);
       break;
     default:
       res.statusCode = 404;
