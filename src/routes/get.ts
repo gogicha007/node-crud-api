@@ -1,16 +1,16 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
+import { getAll } from '../utils/getUsers';
 
-export const getRequest = (req: IncomingMessage, res: ServerResponse) => {
+export const getRequest = async (req: IncomingMessage, res: ServerResponse) => {
   switch (req.url) {
-    case '/':
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(`home method ${req.url}`);
+    case '/api/users':
+      const getUsers = (await getAll(req, res)) as string;
+      const result = getUsers ? getUsers : 'no data';
+      res.writeHead(200);
+      res.write(`Users: \n ${result}`);
+      res.end();
       break;
-    case 'api/users':
-        res.writeHead(200)
-        res.end('get users')
-        break
-    case (req.url as string).match(/\/api\/users\/\w+/)?.input: 
+    case (req.url as string).match(/\/api\/users\/\w+/)?.input:
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end('get user by id');
       break;
