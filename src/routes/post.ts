@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { createUser } from '../utils/userController';
+import { addUser } from '../controllers/userController';
 
 
 export const postRequest = (req: IncomingMessage, res: ServerResponse) => {
@@ -10,7 +10,7 @@ export const postRequest = (req: IncomingMessage, res: ServerResponse) => {
         data += chunk;
       });
       req.on('end', async () => {
-        const result = await createUser(data)
+        const result = await addUser(data)
         if(result){
           res.statusCode = 201;
           res.writeHead(201, { 'Content-Type': 'text/plain' });

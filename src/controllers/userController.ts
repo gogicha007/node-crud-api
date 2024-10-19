@@ -12,7 +12,7 @@ import { IFUser } from '../interfaces';
 
 const usersFilePath = path.resolve(__dirname, '../data/users.json');
 
-export const getAll = async (req: IncomingMessage, res: ServerResponse) => {
+export const getAllUsers = async (req: IncomingMessage, res: ServerResponse) => {
   const usersArray = await getJSONData(usersFilePath);
   return usersArray;
 };
@@ -37,7 +37,7 @@ export const getById = async (req: IncomingMessage, res: ServerResponse) => {
   return result;
 };
 
-export const createUser = async (data: string) => {
+export const addUser = async (data: string) => {
   try {
     const userData = JSON.parse(data) as IFUser;
     const isValid = validateUserData(userData);
@@ -95,7 +95,7 @@ export const updateUser = async (req: IncomingMessage, res: ServerResponse) => {
 
 export const deleteUser = async (req: IncomingMessage, res: ServerResponse) => {
   const id = req.url?.split('/')[3] as string;
-  let result = { status: 400, data: 'Something went wrong' };
+  let result = { status: 400, data: 'Something went wrong...' };
   if (isValidId(id)) {
     const usersArray = await getJSONData(usersFilePath);
     const userIndex = usersArray.findIndex((el) => el.id === id);
