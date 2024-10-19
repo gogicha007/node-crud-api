@@ -8,7 +8,6 @@ export const deleteRequest = async (
   switch (req.url) {
     case (req.url as string).match(/\/api\/users\/\w+/)?.input:
       const removedUser = await deleteUser(req, res);
-      console.log(removedUser)
       res.writeHead(removedUser.status, { 'Content-Type': 'text/plain' });
       res.end(removedUser.data);
       break;
