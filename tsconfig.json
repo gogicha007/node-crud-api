@@ -106,6 +106,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/utils/getUsers.tmp", "src/utils/createUser.tmp", "src/utils/findUser.tmp", "src/utils/updateUser.tmp", "src/utils/deleteUser.tmp"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

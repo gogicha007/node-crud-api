@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { updateUser } from '../utils/updateUser';
+import { updateUser } from '../utils/userController';
 
 export const putRequest = async (req: IncomingMessage, res: ServerResponse) => {
   switch (req.url) {

@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { createUser } from '../utils/createUser';
+import { createUser } from '../utils/userController';
 
 
 export const postRequest = (req: IncomingMessage, res: ServerResponse) => {

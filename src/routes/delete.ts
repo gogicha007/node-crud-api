@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { deleteUser } from '../utils/deleteUser';
+import { deleteUser } from '../utils/userController';
 
 export const deleteRequest = async (
   req: IncomingMessage,

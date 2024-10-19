@@ -49,3 +49,19 @@ export const getJSONData = async (filePath: string) => {
   }
   return result;
 };
+
+export const validateUserData = (data: IFUser) => {
+  if (typeof data === 'object' && !Array.isArray(data) && data !== null) {
+    if (!(data.username && data.age && data.hobbies)) return false;
+    if (
+      !(
+        typeof data.username === 'string' &&
+        typeof data.age === 'number' &&
+        Array.isArray(data.hobbies)
+      )
+    )
+      return false;
+    return true;
+  }
+  return false;
+};
