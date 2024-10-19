@@ -14,7 +14,7 @@ export const postRequest = (req: IncomingMessage, res: ServerResponse) => {
         if(result){
           res.statusCode = 201;
           res.writeHead(201, { 'Content-Type': 'text/plain' });
-          res.end('postRequests - user created');
+          res.end('POST Request - user created');
         } else {
           res.statusCode = 400;
           res.writeHead(400, { 'Content-Type': 'text/plain' });
