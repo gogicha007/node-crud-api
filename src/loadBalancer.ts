@@ -17,14 +17,13 @@ if (cluster.isPrimary) {
   //   const target  = servers[current]
   //   current = (current + 1) % (numCPUs-1)
   // }
-  // workerPorts.forEach((workerPort) => {
-  //   console.log(workerPort)
-  //   const child = cluster.fork({PORT: workerPort});
-  //   child.on('message', async (message) => {
-  //     console.log(message);
-  //     //   await doRequest(dbReqOptions('POST'), message);
-  //   });
-  // });
+  workerPorts.forEach((workerPort) => {
+    console.log(workerPort)
+    const child = cluster.fork({PORT: workerPort});
+    child.on('message', async (message) => {
+      console.log(message);
+    });
+  });
 
   cluster.on('exit', (worker) => {
     console.log(`Worker ${worker.process.pid} died`);
