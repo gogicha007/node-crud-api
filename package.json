@@ -5,6 +5,7 @@
   "scripts": {
     "start:dev": "ts-node-dev src/app.ts",
     "start:prod": "tsc --build --noEmit false && node dist/app.js",
+    "start:multi": "ts-node src/loadBalancer.ts",
     "test": "jest --silent",
     "build": "tsc --build"
   },
